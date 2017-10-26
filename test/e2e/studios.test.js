@@ -63,43 +63,22 @@ describe('Studios API', () => {
             .send(studio)
             .then(res => {
                 savedStudio = res.body;
-                return request.get(`/api/filmIndustry/studios/${savedStudio._id}`)
-                    .then(() => {
-                        let movie = {
-                            title: 'Field of Dreams',
-                            studio: savedStudio._id,
-                            released: '1995'
-                        };
-                        return request.post('/api/filmIndustry/films')
-                            .send(movie)
-                            .then(() => {
-                                return request.get(`/api/filmIndustry/studios/${savedStudio._id}`);
-                            });
-                    });
+                let movie = {
+                    title: 'Field of Dreams',
+                    studio: savedStudio._id,
+                    released: '1995'
+                };
+                return request.post('/api/filmIndustry/films')
+                    .send(movie);
+            })
+            .then(() => {
+                return request.get(`/api/filmIndustry/studios/${savedStudio._id}`);
+            
             })
             .then(res => {
                 assert.equal(res.body.name, savedStudio.name);
                 assert.deepEqual(res.body.address, savedStudio.address);
-                assert.equal(res.body.films, 'Field of Dreams');
-            });
-    });
-
-    it('gets by id and returns a 404 with a bad id', () => {
-        const update = {
-            name: 'Paramount Pictures',
-            address: {
-                city: 'Hollywood',
-                state: 'California',
-                country: 'USA'
-            }
-        };
-        return request.post('/api/filmIndustry/studios')
-            .send(studio)
-            .then(res => {
-                return request.put(`/api/filmIndustry/studios/${res.body._id}`).send(update);
-            })
-            .then(res => {
-                assert.equal(res.body.name, update.name);
+                assert.deepEqual(res.body.films, ['Field of Dreams']);
             });
     });
 
