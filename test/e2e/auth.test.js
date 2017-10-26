@@ -32,7 +32,7 @@ describe.only( 'Auth API',() => {
                 }
             );
     });
-    it.only( 'must include a password', () => {
+    it( 'must include a password', () => {
         return request
             .post('/api/auth/signup')
             .send({ email: 'otheruser', password: '' })
@@ -43,5 +43,14 @@ describe.only( 'Auth API',() => {
                 }
             );
     });
+
+    // it.only('signin with same credentials', () => {
+    //     return request
+    //         .post('/api/auth/signin')
+    //         .send({ email: 'user', password: 'hello' })
+    //         .then(({ body }) => {
+    //             assert.isOk(body.token);
+    //         });
+    // });
 
 });
