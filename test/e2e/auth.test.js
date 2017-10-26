@@ -32,5 +32,16 @@ describe.only( 'Auth API',() => {
                 }
             );
     });
+    it.only( 'must include a password', () => {
+        return request
+            .post('/api/auth/signup')
+            .send({ email: 'otheruser', password: '' })
+            .then(
+                () => { throw new Error('Unexpected successful response'); },
+                err => {
+                    assert.equal(err.status, 400);
+                }
+            );
+    });
 
 });
