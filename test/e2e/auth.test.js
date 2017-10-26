@@ -21,5 +21,16 @@ describe.only( 'Auth API',() => {
         assert.ok(token);
     });
 
+    it('cannot signup with same email', () => {
+        return request
+            .post('/api/auth/signup')
+            .send({ email: 'testUser', password: 'goodbye' })
+            .then(
+                () => { throw new Error('Unexpected successful response');},
+                err => {
+                    assert.equal(err.status, 400);
+                }
+            );
+    });
 
 });
