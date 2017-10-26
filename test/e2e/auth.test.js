@@ -2,7 +2,7 @@ const request = require('./request');
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
 
-describe.only( 'Auth API',() => {
+describe( 'Auth API',() => {
 
     beforeEach(() => mongoose.connection.dropDatabase());
 
@@ -44,13 +44,5 @@ describe.only( 'Auth API',() => {
             );
     });
 
-    // it.only('signin with same credentials', () => {
-    //     return request
-    //         .post('/api/auth/signin')
-    //         .send({ email: 'user', password: 'hello' })
-    //         .then(({ body }) => {
-    //             assert.isOk(body.token);
-    //         });
-    // });
 
 });
